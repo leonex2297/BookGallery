@@ -9,14 +9,18 @@ const Booklist = () => {
   const [newBooks1, setNewBooks] = useState([]);
 
   const remove = (bookId) => {
-    let newbooklist = books1.filter((val) => val.id !== bookId);
-    setBooks1(newbooklist);
+    console.log(bookId);
+    let newbooklist = newBooks1.filter((val) => val.id !== bookId);
+    console.log(newbooklist);
+    let bk = [newbooklist];
+    setNewBooks(bk);
   };
   const getDataFromMyChild = (bookId) => {
-    console.log(bookId);
+    // console.log(bookId);
     let newBook = books1.filter((val) => val.id === bookId);
+    let cardBooks = [...newBooks1, newBook];
 
-    setNewBooks(newBook);
+    setNewBooks(cardBooks);
   };
 
   return (
@@ -25,18 +29,22 @@ const Booklist = () => {
         {books1.map((book) => {
           return (
             <>
-              <Book
-                key={book.id}
-                book={book}
-                remove={remove}
-                func={getDataFromMyChild}
-              />
+              <Book key={book.id} book={book} func={getDataFromMyChild} />
             </>
           );
         })}
       </div>
-      <div>
-        <AddedBooks added={newBooks1} />
+      <br />
+      <h1>Card Items </h1>
+      <div className="Booklist">
+        {newBooks1.map((cardbook) => {
+          console.log(cardbook);
+          return (
+            <>
+              <AddedBooks key={cardbook.id} remove={remove} added={cardbook} />
+            </>
+          );
+        })}
       </div>
     </>
   );
